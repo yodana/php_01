@@ -1,9 +1,6 @@
 <?php
 function search_by_states($city){
-    $all = explode(", ", $city);
-    foreach($all as $a){
-        print_r($a);
-    };
+    $all = explode(",", $city);
     $r = NULL;
     $states = [
         'Oregon' => 'OR',
@@ -17,11 +14,15 @@ function search_by_states($city){
         'NJ' => 'trenton',
         'KS' => 'Topeka', 
         ];
-    foreach($states as $key => $value){
-        if ($key == $city){
-            $r = $value;
+    $r = NULL;
+    foreach($all as $a){
+        foreach($states as $key => $value){
+            if ($key == trim($a)){
+                $r = $value;
+            }
         }
-    }
+    };
+    print_r($r);
     $c = NULL;
     foreach($capitals as $key => $value){
         if ($key == $r){
@@ -33,4 +34,4 @@ function search_by_states($city){
     return $c . PHP_EOL;
 }
 
-print_r(search_by_states("Oregon, trenton, Topeka, NewJersey"));
+search_by_states("Oregon, trenton, Topeka, NewJersey");
