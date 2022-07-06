@@ -6,19 +6,25 @@ function array2hash($array){
     foreach ($array as $a){
         $new[$a[0]] = $a[1];
     }
-    $sorted = [];
-    while ($age = current($new)){
-        if ($sorted == [])
-            $sorted[] = array(key($new) => $age);
-        for ($i = 0; $i < count($sorted); $i++){
-            if ord(key($sorted[i])) 
-            $sorted[i]
+    $keys = array_keys($new);
+    $values = array_values($new);
+    for ($i = 0; $i < count($keys); $i++){
+        for($j = 0; $j < count($keys); $j++){
+            if (ord($keys[$j][-1]) <= ord($keys[$j + 1][-1])){
+                if ((ord($keys[$j][-1]) == ord($keys[$j + 1][-1]) && $values[$j] > $values[$j + 1]) || (ord($keys[$j][-1]) < ord($keys[$j + 1][-1]))){
+                    $save = $keys[$j];
+                    $keys[$j] = $keys[$j + 1];
+                    $keys[$j+ 1] = $save;
+                    $save = $values[$j];
+                    $values[$j] = $values[$j + 1];
+                    $values[$j+ 1] = $save;
+                }
+            }
         }
-       next($new);
     }
-    //faire le tri inverse en partant de la fin si meme lettre alors l'age le + bas en premier
-    return $sorted;
+    $new = array_combine($keys, $values);
+    return $new;
 }
 
-$array = array(array("Pierre","30"), array("Mary","28"), array("Nelly", "22"));
+$array = array(array("Pierre","30"));
 array2hash($array);
