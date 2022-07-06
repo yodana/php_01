@@ -1,7 +1,6 @@
 <?php
 function search_by_states($city){
     $all = explode(",", $city);
-    $r = NULL;
     $states = [
         'Oregon' => 'OR',
         'Alabama' => 'AL',
@@ -14,24 +13,33 @@ function search_by_states($city){
         'NJ' => 'trenton',
         'KS' => 'Topeka', 
         ];
-    $r = NULL;
     foreach($all as $a){
+        $r = NULL;
+        $find = 0;
         foreach($states as $key => $value){
             if ($key == trim($a)){
                 $r = $value;
+                foreach($capitals as $k => $v){
+                    if ($k == $r){
+                        print_r($v . " is the capital of " . $key . "." . PHP_EOL);
+                        $find = 1;
+                    }
+                }
             }
         }
-    };
-    print_r($r);
-    $c = NULL;
-    foreach($capitals as $key => $value){
-        if ($key == $r){
-            $c = $value;
+        foreach($capitals as $key => $value){
+            if ($value == trim($a)){
+                $r = $key;
+                foreach($states as $k => $v){
+                    if ($v == $r){
+                        print_r($value . " is the capital of " . $k . "." . PHP_EOL);
+                        $find = 1;
+                    }
+                }
+                $r = $value;
+            }
         }
-    }
-    if ($c == NULL)
-        return $city . "is neither a capital nor a state.\n";
-    return $c . PHP_EOL;
+        if ($find == 0)
+            print_r(trim($a) . " is neither a capital nor a state." . PHP_EOL);
+    };
 }
-
-search_by_states("Oregon, trenton, Topeka, NewJersey");
