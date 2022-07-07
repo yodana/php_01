@@ -14,9 +14,16 @@
     while($line = fgets($file)){
         $array[] = explode("=", $line);
     }
+    print_r($array);
+    //$name = $array[0][0];
+    $i = 0;
     foreach($array as $a){
-        print_r(explode(":", explode(",", $a[1])[0]));
+        $array[$i] = array("name" => trim($array[$i][0]), 
+        "position" => explode(":",explode(",", $a[1])[0])[1],
+        "number" => explode(":",explode(",", $a[1])[1])[1]);
+        $i++;
     }
+    print_r($array);
     fputs($m, '</body>
     </html>');
     fclose($file);
