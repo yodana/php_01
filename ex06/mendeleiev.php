@@ -10,13 +10,14 @@
             <title>COPY</title>
         </head>
         <body>');
-    
+    $array = array();
     while($line = fgets($file)){
-        print_r(explode("=", $line));    
+        $array[] = explode("=", $line);
     }
-    print_r($tab);
+    foreach($array as $a){
+        print_r(explode(":", explode(",", $a[1])[0]));
+    }
     fputs($m, '</body>
     </html>');
-
     fclose($file);
     fclose($m);
