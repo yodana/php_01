@@ -26,18 +26,26 @@
         "electron" => array_sum(explode(" ",explode(":",explode(",", $a[1])[4])[1])));
         $i++;
     }
+    $i = 0;
     foreach($array as $a){
-        fputs($m, '<table>
-            <tr>
-            <td style="border: 1px solid black; padding:10px">
-            <h4>' . $a["name"] . '</h4>
-            <ul>
-            <li> No ' . $a["number"] . '</li>
-            <li>' . $a["small"]. '</li>
-            <li>' . $a["molar"]. ' </ li>
-            <li>' . $a["electron"]. '</li>
-            <ul>
-            </td>');
+        if ($i == $a["position"]){
+            fputs($m, '<table>
+                <tr>
+                <td style="border: 1px solid black; padding:10px">
+                <h4>' . $a["name"] . '</h4>
+                <ul>
+                <li> No ' . $a["number"] . '</li>
+                <li>' . $a["small"]. '</li>
+                <li>' . $a["molar"]. ' </ li>
+                <li>' . $a["electron"]. '</li>
+                <ul>
+                </td>');
+        }
+        else
+            fputs($m, '<table>
+                <tr>
+                <td style="border: 1px solid white; padding:10px">
+                </td>');
     }
     print_r($array);
     fputs($m, '</body>
