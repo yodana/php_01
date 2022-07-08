@@ -1,11 +1,9 @@
 <?php
     $file = fopen("ex06.txt", "r");
     $m = fopen("mendeleiev.html", "w");
-    // 18 colonnes 7 lignes
     fputs($m, '<!DOCTYPE html>
     <html>
         <head>
-            <link rel="stylesheet" href="style.css" type="text/css" />
             <meta charset="utf-8">
             <title>COPY</title>
         </head>
@@ -14,8 +12,6 @@
     while($line = fgets($file)){
         $array[] = explode("=", $line);
     }
-    print_r($array);
-    //$name = $array[0][0];
     $i = 0;
     foreach($array as $a){
         $array[$i] = array("name" => trim($array[$i][0]), 
@@ -27,28 +23,35 @@
         $i++;
     }
     $i = 0;
+    fputs($m, '<table>
+    <tr>');
     foreach($array as $a){
-        if ($i == $a["position"]){
-            fputs($m, '<table>
-                <tr>
-                <td style="border: 1px solid black; padding:10px">
+        while ($i != $a["position"]){
+            fputs($m, '
+            <td style="border: 1px solid white; padding: 10px">
+            </td>');
+            $i++;
+        }
+        fputs($m, '
+            <td style="border: 1px solid black; padding: 10px">
                 <h4>' . $a["name"] . '</h4>
                 <ul>
-                <li> No ' . $a["number"] . '</li>
-                <li>' . $a["small"]. '</li>
-                <li>' . $a["molar"]. ' </ li>
-                <li>' . $a["electron"]. '</li>
+                    <li> No ' . $a["number"] . '</li>
+                    <li>' . $a["small"]. '</li>
+                    <li>' . $a["molar"]. ' </li>
+                    <li>' . $a["electron"]. '</li>
                 <ul>
-                </td>');
+            </td>');
+        $i++;
+        if ($i == 18){
+            $i = 0;
+            fputs($m, '</tr>
+            <tr>');
         }
-        else
-            fputs($m, '<table>
-                <tr>
-                <td style="border: 1px solid white; padding:10px">
-                </td>');
     }
-    print_r($array);
-    fputs($m, '</body>
+    fputs($m, '
+    </table>
+    </body>
     </html>');
     fclose($file);
     fclose($m);
