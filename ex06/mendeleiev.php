@@ -20,8 +20,24 @@
     foreach($array as $a){
         $array[$i] = array("name" => trim($array[$i][0]), 
         "position" => explode(":",explode(",", $a[1])[0])[1],
-        "number" => explode(":",explode(",", $a[1])[1])[1]);
+        "number" => explode(":",explode(",", $a[1])[1])[1],
+        "small" => explode(":",explode(",", $a[1])[2])[1],
+        "molar" => explode(":",explode(",", $a[1])[3])[1],
+        "electron" => array_sum(explode(" ",explode(":",explode(",", $a[1])[4])[1])));
         $i++;
+    }
+    foreach($array as $a){
+        fputs($m, '<table>
+            <tr>
+            <td style="border: 1px solid black; padding:10px">
+            <h4>' . $a["name"] . '</h4>
+            <ul>
+            <li> No ' . $a["number"] . '</li>
+            <li>' . $a["small"]. '</li>
+            <li>' . $a["molar"]. ' </ li>
+            <li>' . $a["electron"]. '</li>
+            <ul>
+            </td>');
     }
     print_r($array);
     fputs($m, '</body>
